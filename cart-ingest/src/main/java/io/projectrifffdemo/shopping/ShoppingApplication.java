@@ -11,6 +11,9 @@ import java.util.function.Consumer;
 @SpringBootApplication
 public class ShoppingApplication {
 
+    public final String STREAMING_HTTP_GATEWAY_NAME = "riff-streaming-http-gateway";
+    public final String STREAM_NAME = "cart-events";
+
     public static void main(String[] args) {
         SpringApplication.run(ShoppingApplication.class, args);
     }
@@ -20,7 +23,7 @@ public class ShoppingApplication {
         return e -> {
             System.out.println("Consuming event"+ e);
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.postForLocation("http://riff-streaming-http-gateway.riff-system.svc.cluster.local/default/cart-events", e);
+            restTemplate.postForLocation("http://"+STREAMING_HTTP_GATEWAY_NAME+".riff-system.svc.cluster.local/default/"+STREAM_NAME, e);
             System.out.println("published");
         };
     }
