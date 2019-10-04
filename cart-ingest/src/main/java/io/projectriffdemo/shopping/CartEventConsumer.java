@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Component
-public class CartEventConsumer implements Consumer<CartEvent> {
-
+public class CartEventConsumer implements Consumer<CartEvent>, Function<CartEvent, String> {
 
     private final RestTemplate restTemplate;
     private final String streamUrl;
@@ -22,6 +22,13 @@ public class CartEventConsumer implements Consumer<CartEvent> {
 
         this.restTemplate = restTemplate;
         this.streamUrl = String.format("http://%s.riff-system.svc.cluster.local/%s/%s", streamingGateway, streamNamespace, streamName);
+    }
+
+    // needs to be a function as the riff java invoker does not support Consumer yet
+    @Override
+    public String apply(CartEvent cartEvent) {
+        this.accept(cartEvent);
+        return "irrelevant";
     }
 
     @Override
