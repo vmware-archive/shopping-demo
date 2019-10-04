@@ -1,4 +1,4 @@
-package io.projectrifffdemo.shopping;
+package io.projectriffdemo.shopping;
 
 public class CartEvent {
     private String userId;

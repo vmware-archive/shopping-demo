@@ -1,4 +1,4 @@
-package io.projectrifffdemo.shopping;
+package io.projectriffdemo.shopping;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package io.projectrifffdemo.shopping;
+package io.projectriffdemo.shopping;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
