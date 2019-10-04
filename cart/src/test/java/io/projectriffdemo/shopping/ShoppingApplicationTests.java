@@ -4,27 +4,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.function.context.FunctionCatalog;
-import org.springframework.cloud.function.context.test.FunctionalSpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 @RunWith(SpringRunner.class)
-@FunctionalSpringBootTest
+@SpringBootTest
 public class ShoppingApplicationTests {
 
     @Autowired
-    private FunctionCatalog catalog;
+    private Function<Flux<CartEvent>, Flux<Cart>> function;
 
     @Test
     public void updateCartOneCustomerAddItem() {
-        Function<Flux<CartEvent>, Flux<Cart>> function = catalog.lookup(Function.class, "updateCart");
         Flux<CartEvent> in = Flux.just(
                 new CartEvent("1", "i1", "add"),
                 new CartEvent("1", "i2", "add")
@@ -45,7 +39,6 @@ public class ShoppingApplicationTests {
 
     @Test
     public void updateCartOneCustomerRemoveItem() {
-        Function<Flux<CartEvent>, Flux<Cart>> function = catalog.lookup(Function.class, "updateCart");
         Flux<CartEvent> in = Flux.just(
                 new CartEvent("1", "i1", "add"),
                 new CartEvent("1", "i2", "add"),
@@ -71,7 +64,6 @@ public class ShoppingApplicationTests {
 
     @Test
     public void updateCartOneCustomerEmptyCart() {
-        Function<Flux<CartEvent>, Flux<Cart>> function = catalog.lookup(Function.class, "updateCart");
         Flux<CartEvent> in = Flux.just(
                 new CartEvent("1", "i1", "add"),
                 new CartEvent("1", "i1", "remove")
@@ -90,7 +82,6 @@ public class ShoppingApplicationTests {
 
     @Test
     public void updateCartTwoCustomers() {
-        Function<Flux<CartEvent>, Flux<Cart>> function = catalog.lookup(Function.class, "updateCart");
         Flux<CartEvent> in = Flux.just(
                 new CartEvent("1", "i1", "add"),
                 new CartEvent("2", "i1", "add"),

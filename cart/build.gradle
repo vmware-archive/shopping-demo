@@ -18,7 +18,6 @@ ext {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-    implementation 'org.springframework.cloud:spring-cloud-function-context'
     implementation 'io.projectreactor:reactor-core'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
@@ -26,7 +25,6 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
         mavenBom "io.projectreactor:reactor-bom:Bismuth-RELEASE"
     }
 }
