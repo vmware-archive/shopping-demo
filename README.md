@@ -40,6 +40,12 @@ to compute the final state of the cart and display targeted advertisements.
     ```
 1. create functions:
     ```sh
-    riff function create ad-ingest --git-repo https://github.com/sbawaska/shopping-demo.git --sub-path ad-ingest/
-    riff function create cart-ingest --git-repo https://github.com/sbawaska/shopping-demo.git --sub-path cart-ingest/
+    riff function create ad-ingest \
+        --git-repo https://github.com/sbawaska/shopping-demo.git \
+        --sub-path ad-ingest/ \
+        --tail
+    riff function create cart-ingest \
+        --git-repo https://github.com/sbawaska/shopping-demo.git \
+        --sub-path cart-ingest/ \
+        --tail
     ```
