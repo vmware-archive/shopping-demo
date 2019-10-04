@@ -1,6 +1,6 @@
 package io.projectriffdemo.homepage;
 
-public class Advertisment {
+public class Advertisement {
     private String itemId;
     private String message;
 
@@ -9,7 +9,7 @@ public class Advertisment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Advertisment that = (Advertisment) o;
+        Advertisement that = (Advertisement) o;
 
         return itemId.equals(that.itemId);
 
@@ -20,7 +20,7 @@ public class Advertisment {
         return itemId.hashCode();
     }
 
-    public Advertisment(String itemId, String message) {
+    public Advertisement(String itemId, String message) {
         this.itemId = itemId;
         this.message = message;
     }

@@ -9,13 +9,13 @@ import org.springframework.web.client.RestTemplate;
 import java.util.function.Consumer;
 
 @SpringBootApplication
-public class ShoppingApplication {
+public class CartIngestApplication {
 
     public final String STREAMING_HTTP_GATEWAY_NAME = "riff-streaming-http-gateway";
     public final String STREAM_NAME = "cart-events";
 
     public static void main(String[] args) {
-        SpringApplication.run(ShoppingApplication.class, args);
+        SpringApplication.run(CartIngestApplication.class, args);
     }
 
     @Bean
