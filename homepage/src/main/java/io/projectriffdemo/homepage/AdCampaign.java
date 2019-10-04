@@ -4,7 +4,7 @@ import java.util.List;
 
 public class AdCampaign {
     private String userId;
-    private List<Advertisment> ads;
+    private List<Advertisement> ads;
 
     public String getUserId() {
         return userId;
@@ -14,15 +14,15 @@ public class AdCampaign {
         this.userId = userId;
     }
 
-    public List<Advertisment> getAds() {
+    public List<Advertisement> getAds() {
         return ads;
     }
 
-    public void setAds(List<Advertisment> ads) {
+    public void setAds(List<Advertisement> ads) {
         this.ads = ads;
     }
 
-    public AdCampaign(String userId, List<Advertisment> ads) {
+    public AdCampaign(String userId, List<Advertisement> ads) {
         this.userId = userId;
         this.ads = ads;
     }
