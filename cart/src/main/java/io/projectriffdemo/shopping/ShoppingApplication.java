@@ -19,18 +19,14 @@ public class ShoppingApplication {
 
     @Bean
     public Function<Flux<CartEvent>, Flux<Cart>> updateCart() {
-        return cartEvents -> {
-            Set<Cart> carts = new HashSet<>();
-            cartEvents.
-                    log().
-                    map(cartEvent -> {
-                        Cart cart = getCart(cartEvent.getUserId());
-                        cart.applyEvent(cartEvent);
-                        saveCart(cart);
-                        return cart;
-                    }).subscribe(carts::add);
-            return Flux.fromIterable(carts);
-        };
+        return cartEvents -> cartEvents.log().
+                map(cartEvent -> {
+                    Cart cart = getCart(cartEvent.getUserId());
+                    cart.applyEvent(cartEvent);
+                    return cart;
+                })
+                .doOnNext(this::saveCart)
+                .doOnComplete(this.cartCache::clear);
     }
 
     private Map<String, Cart> cartCache = new ConcurrentHashMap<>();

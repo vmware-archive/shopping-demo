@@ -12,6 +12,7 @@ public class Cart {
 
     public Cart(String userId) {
         this.userId = userId;
+        this.items = new ArrayList<>();
     }
 
     public String getUserId() {
@@ -48,8 +49,7 @@ public class Cart {
     public void applyEvent(CartEvent event) {
         switch (event.getAction()) {
             case "add":
-                Merchandise item = new Merchandise();
-                item.setItemId(event.getItemId());
+                Merchandise item = new Merchandise(event.getItemId());
                 item.setPrice(1); // TODO lookup
                 item.setDescription(""); // TODO lookup
                 this.addItem(item);
@@ -75,11 +75,11 @@ public class Cart {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cart cart = (Cart) o;
-        return userId.equals(cart.userId);
+        return userId.equals(cart.userId) && items.equals(cart.items);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId);
+        return Objects.hash(userId, items);
     }
 }

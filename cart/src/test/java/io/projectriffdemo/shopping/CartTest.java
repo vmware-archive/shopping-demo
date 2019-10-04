@@ -32,8 +32,7 @@ public class CartTest {
     }
 
     private Merchandise getMerchandise(int itemId) {
-        Merchandise item = new Merchandise();
-        item.setItemId(itemId+"");
+        Merchandise item = new Merchandise(itemId+"");
         return item;
     }
 
