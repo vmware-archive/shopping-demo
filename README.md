@@ -29,6 +29,7 @@ to compute the final state of the cart and display targeted advertisements.
     helm repo update
     helm install --name my-kafka incubator/kafka
     ```
+1. install riff HTTP gateway (follow the [README](https://github.com/projectriff/http-gateway))
 1. configure a container registry for riff to push built images:
     ```sh
     riff credentials apply my-gcr --gcr <path to service account token file> --set-default-image-prefix
