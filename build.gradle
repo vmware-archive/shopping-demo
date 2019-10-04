@@ -1,0 +1,14 @@
+allprojects {
+    repositories {
+        mavenCentral() 
+    }
+}
+
+
+subprojects {
+	apply plugin: 'java'
+
+	group = 'io.projectriffdemo'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '11'
+}
