@@ -2,10 +2,12 @@ package io.projectriffdemo.shopping;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.function.Consumer;
 
+@Component
 public class AdEventConsumer implements Consumer<AdEvent> {
 
     private final RestTemplate restTemplate;
