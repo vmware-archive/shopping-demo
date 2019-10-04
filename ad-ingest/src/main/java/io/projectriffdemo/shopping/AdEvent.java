@@ -2,30 +2,30 @@ package io.projectriffdemo.shopping;
 
 public class AdEvent {
 
-    private String adId;
-    private String description;
+    private String itemId;
+    private String message;
 
-    public String getAdId() {
-        return adId;
+    public String getItemId() {
+        return itemId;
     }
 
-    public void setAdId(String adId) {
-        this.adId = adId;
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getMessage() {
+        return message;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
     public String toString() {
         return "AdEvent{" +
-                "adId='" + adId + '\'' +
-                ", description='" + description + '\'' +
+                "itemId='" + itemId + '\'' +
+                ", message='" + message + '\'' +
                 '}';
     }
 }

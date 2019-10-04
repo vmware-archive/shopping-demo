@@ -50,3 +50,21 @@ to compute the final state of the cart and display targeted advertisements.
         --sub-path cart-ingest/ \
         --tail
     ```
+1. create deployers:
+    ```sh
+   riff core deployer create ad-ingest --function-ref ad-ingest
+   riff core deployer create cart-ingest --function-ref cart-ingest
+    ```
+   
+## Data ingestion
+
+### Ads
+
+In 1 terminal:
+```sh
+kubectl port-forward svc/ad-ingest-deployer 8080:80
+```
+In another one:
+```sh
+curl http://localhost:8080 --header 'Content-Type:application/json'  --data '{"itemId": 123, "message": "some great product"}'
+```
