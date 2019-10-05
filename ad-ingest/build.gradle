@@ -12,10 +12,6 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    set('springCloudVersion', "Greenwich.SR3")
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
