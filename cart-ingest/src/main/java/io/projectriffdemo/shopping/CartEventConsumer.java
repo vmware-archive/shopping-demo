@@ -6,29 +6,27 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 @Component
-public class CartEventConsumer implements Consumer<CartEvent>, Function<CartEvent, String> {
+public class CartEventConsumer implements Consumer<CartEvent> {
 
     private final RestTemplate restTemplate;
     private final String streamUrl;
 
     @Autowired
     public CartEventConsumer(RestTemplate restTemplate,
-                             @Value("${streaming.gateway}") String streamingGateway,
+                             @Value("${http.gateway.serviceName}") String gatewayServiceName,
+                             @Value("${http.gateway.namespace}") String gatewayNamespace,
                              @Value("${streaming.stream.namespace:default}") String streamNamespace,
                              @Value("${streaming.stream.name}") String streamName) {
 
         this.restTemplate = restTemplate;
-        this.streamUrl = String.format("http://%s.riff-system.svc.cluster.local/%s/%s", streamingGateway, streamNamespace, streamName);
-    }
-
-    // needs to be a function as the riff java invoker does not support Consumer yet
-    @Override
-    public String apply(CartEvent cartEvent) {
-        this.accept(cartEvent);
-        return "irrelevant";
+        this.streamUrl = String.format("http://%s.%s.svc.cluster.local/%s/%s",
+                gatewayServiceName,
+                gatewayNamespace,
+                streamNamespace,
+                streamName
+        );
     }
 
     @Override

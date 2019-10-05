@@ -1,3 +1,3 @@
 ## cart-ingest
 
-processes cart events and writes them to cart-events stream.
+processes POSTed ad events and writes them to ad-events stream via the HTTP->streaming riff gateway.

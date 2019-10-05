@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.function.Consumer;
 
 @RestController
-public class AdEventController {
+public class CartEventController {
 
-    private final Consumer<AdEvent> eventConsumer;
+    private final Consumer<CartEvent> eventConsumer;
 
     @Autowired
-    public AdEventController(Consumer<AdEvent> eventConsumer) {
+    public CartEventController(Consumer<CartEvent> eventConsumer) {
         this.eventConsumer = eventConsumer;
     }
 
     @PostMapping
-    public void persist(@RequestBody AdEvent event) {
+    public void persist(@RequestBody CartEvent event) {
         eventConsumer.accept(event);
     }
 }
