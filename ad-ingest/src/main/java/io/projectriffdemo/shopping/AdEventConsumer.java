@@ -15,12 +15,18 @@ public class AdEventConsumer implements Consumer<AdEvent> {
 
     @Autowired
     public AdEventConsumer(RestTemplate restTemplate,
-                           @Value("${streaming.gateway}") String streamingGateway,
+                           @Value("${streaming.gateway.serviceName}") String streamingGatewayServiceName,
+                           @Value("${streaming.gateway.namespace}") String streamingGatewayNamespace,
                            @Value("${streaming.stream.namespace:default}") String streamNamespace,
                            @Value("${streaming.stream.name}") String streamName) {
 
         this.restTemplate = restTemplate;
-        this.streamUrl = String.format("http://%s.riff-system.svc.cluster.local/%s/%s", streamingGateway, streamNamespace, streamName);
+        this.streamUrl = String.format("http://%s.%s.svc.cluster.local/%s/%s",
+                streamingGatewayServiceName,
+                streamingGatewayNamespace,
+                streamNamespace,
+                streamName
+        );
     }
 
     @Override
