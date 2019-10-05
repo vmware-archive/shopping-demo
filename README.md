@@ -26,12 +26,26 @@ to compute the final state of the cart and display targeted advertisements.
     ```sh
     helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
     helm repo update
-    helm install --name my-kafka incubator/kafka
+    kubectl create ns kafka
+    helm install --name my-kafka --namespace kafka incubator/kafka
+    ```
+1. setup kafka provider:
+    ```
+    cat <<EOF | kubectl create -f -
+    ---
+    apiVersion: streaming.projectriff.io/v1alpha1
+    kind: KafkaProvider
+    metadata:
+      name: franz
+    spec:
+      bootstrapServers: my-kafka.kafka.svc.cluster.local:9092
+    EOF
     ```
 1. install riff HTTP gateway (follow the [README](https://github.com/projectriff/http-gateway))
-1. install a Kafka provider
+1. create streams
     ```sh
-   kubectl apply -f https://raw.githubusercontent.com/projectriff/system/master/config/streaming/samples/streaming_v1alpha1_kafka-provider.yaml
+    riff streaming stream create ad-events --provider franz-kafka-provisioner --content-type application/json
+    riff streaming stream create cart-events --provider franz-kafka-provisioner --content-type application/json
     ```
 1. configure a container registry for riff to push built images:
     ```sh
