@@ -4,8 +4,7 @@ This is a sample demonstration of projectriff, in which we create a simple shopp
 User actions such as adding and removing items arrive as input. These events are then used
 to compute the final state of the cart and display targeted advertisements.
 
-
-## Install -- WORK IN PROGRESS
+## Prerequisites
 
 1. install [helm 2.13](https://github.com/helm/helm/releases/tag/v2.13.1) cli
 1. initialize helm
@@ -30,41 +29,40 @@ to compute the final state of the cart and display targeted advertisements.
     helm install --name my-kafka incubator/kafka
     ```
 1. install riff HTTP gateway (follow the [README](https://github.com/projectriff/http-gateway))
+1. install a Kafka provider
+    ```sh
+   kubectl apply -f https://raw.githubusercontent.com/projectriff/system/master/config/streaming/samples/streaming_v1alpha1_kafka-provider.yaml
+    ```
 1. configure a container registry for riff to push built images:
     ```sh
     riff credentials apply my-gcr --gcr <path to service account token file> --set-default-image-prefix
     ```
-1. create streams:
-    ```sh
-    riff streaming stream create ad-events --provider my-kafka --content-type application/json
-    riff streaming stream create cart-events --provider my-kafka --content-type application/json
-    ```
-1. create functions:
-    ```sh
-    riff function create ad-ingest \
-        --git-repo https://github.com/sbawaska/shopping-demo.git \
-        --sub-path ad-ingest/ \
-        --tail
-    riff function create cart-ingest \
-        --git-repo https://github.com/sbawaska/shopping-demo.git \
-        --sub-path cart-ingest/ \
-        --tail
-    ```
-1. create deployers:
-    ```sh
-   riff core deployer create ad-ingest --function-ref ad-ingest
-   riff core deployer create cart-ingest --function-ref cart-ingest
-    ```
+
+## Set up application infrastructure
+
+### Ad pipeline
+
+Run:
+```
+DOCKER_REPO="your-username" ./run-pipeline.sh ad
+```
+
+### Cart pipeline
+
+Run:
+```
+DOCKER_REPO="your-username" ./run-pipeline.sh cart
+```
    
 ## Data ingestion
 
 ### Ads
 
-In 1 terminal:
 ```sh
-kubectl port-forward svc/ad-ingest-deployer 8080:80
+curl http://localhost:8080 --header 'Content-Type:application/json' --data '{"itemId": 123, "message": "some great product"}'
 ```
-In another one:
+### Cart events
+
 ```sh
-curl http://localhost:8080 --header 'Content-Type:application/json'  --data '{"itemId": 123, "message": "some great product"}'
+curl http://localhost:9090 --header 'Content-Type:application/json' --data '{"userId": 42, "itemId": 123, "action": "REMOVE"}'
 ```
