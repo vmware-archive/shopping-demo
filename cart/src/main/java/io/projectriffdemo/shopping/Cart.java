@@ -50,7 +50,11 @@ public class Cart {
     }
 
     public void applyEvent(CartEvent event) {
-        switch (event.getAction()) {
+        if (event.getAction() == null) {
+            throw new IllegalStateException("unknown action 'null' for cart");
+        }
+        String action = event.getAction().toLowerCase();
+        switch (action) {
             case "add":
                 Merchandise item = new Merchandise(event.getItemId());
                 item.setPrice(1); // TODO lookup
