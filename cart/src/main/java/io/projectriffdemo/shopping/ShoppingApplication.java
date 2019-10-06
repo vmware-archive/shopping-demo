@@ -19,23 +19,21 @@ public class ShoppingApplication {
 
     @Bean
     public Function<Flux<CartEvent>, Flux<Cart>> updateCart() {
-        return cartEvents -> cartEvents.log().
-                map(cartEvent -> {
-                    Cart cart = getCart(cartEvent.getUserId());
-                    cart.applyEvent(cartEvent);
-                    return cart;
-                })
-                .doOnNext(this::saveCart)
-                .doOnComplete(this.cartCache::clear);
+        return cartEventFlux -> cartEventFlux
+                .log()
+                .groupBy(CartEvent::getUserId)
+                .concatMap(stringCartEventGroupedFlux -> {
+                    return stringCartEventGroupedFlux.reduce(getCart(stringCartEventGroupedFlux.key()), (cart, cartEvent) -> {
+                        cart.applyEvent(cartEvent);
+                        return cart;
+                    });
+
+                });
+
     }
 
-    private Map<String, Cart> cartCache = new ConcurrentHashMap<>();
-
-    private void saveCart(Cart cart) {
-        this.cartCache.put(cart.getUserId(), cart);
-    }
-
+    // TODO read from redis
     protected Cart getCart(String userId) {
-        return cartCache.getOrDefault(userId, new Cart(userId));
+        return new Cart(userId);
     }
 }
