@@ -24,10 +24,8 @@ to compute the final state of the cart and display targeted advertisements.
     ```
 1. install kafka:
     ```sh
-    helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
-    helm repo update
-    kubectl create ns kafka
-    helm install --name my-kafka --namespace kafka incubator/kafka
+    helm repo add bitnami https://charts.bitnami.com/bitnami
+    helm install --name my-kafka bitnami/kafka
     ```
 1. setup kafka provider:
     ```
@@ -38,7 +36,7 @@ to compute the final state of the cart and display targeted advertisements.
     metadata:
       name: franz
     spec:
-      bootstrapServers: my-kafka.kafka.svc.cluster.local:9092
+      bootstrapServers: my-kafka:9092
     EOF
     ```
 1. install riff HTTP gateway:
