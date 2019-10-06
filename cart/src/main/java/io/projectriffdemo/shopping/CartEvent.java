@@ -5,6 +5,9 @@ public class CartEvent {
     private String itemId;
     private String action;
 
+    public CartEvent() {
+    }
+
     public CartEvent(String userId, String itemId, String action) {
         this.userId = userId;
         this.itemId = itemId;

@@ -10,6 +10,9 @@ public class Cart {
     private String userId;
     private List<Merchandise> items;
 
+    public Cart() {
+    }
+
     public Cart(String userId) {
         this.userId = userId;
         this.items = new ArrayList<>();
