@@ -76,3 +76,12 @@ curl http://localhost:8080 --header 'Content-Type:application/json' --data '{"it
 ```sh
 curl http://localhost:9090 --header 'Content-Type:application/json' --data '{"userId": 42, "itemId": 123, "action": "REMOVE"}'
 ```
+
+## Stream processing
+
+### Cart State
+
+```bash
+riff streaming stream create cart-aggregates --provider franz-kafka-provisioner --content-type 'application/json'
+riff streaming processor create cart --function-ref cart --input cart-events --output cart-aggregates
+```
