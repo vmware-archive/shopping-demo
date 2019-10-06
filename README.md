@@ -41,11 +41,9 @@ to compute the final state of the cart and display targeted advertisements.
       bootstrapServers: my-kafka.kafka.svc.cluster.local:9092
     EOF
     ```
-1. install riff HTTP gateway (follow the [README](https://github.com/projectriff/http-gateway))
-1. create streams
-    ```sh
-    riff streaming stream create ad-events --provider franz-kafka-provisioner --content-type application/json
-    riff streaming stream create cart-events --provider franz-kafka-provisioner --content-type application/json
+1. install riff HTTP gateway:
+    ```
+    kubectl apply -f https://storage.googleapis.com/projectriff/riff-http-gateway/riff-http-gateway-0.5.0-snapshot.yaml
     ```
 1. configure a container registry for riff to push built images:
     ```sh
