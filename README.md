@@ -85,3 +85,10 @@ curl http://localhost:9090 --header 'Content-Type:application/json' --data '{"us
 riff streaming stream create cart-aggregates --provider franz-kafka-provisioner --content-type 'application/json'
 riff streaming processor create cart --function-ref cart --input cart-events --output cart-aggregates
 ```
+
+## Redis persistence
+
+1. start redis
+```bash
+helm install stable/redis --name my-redis --set usePassword=false
+```
