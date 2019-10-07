@@ -43,7 +43,7 @@ public class ShoppingApplication {
         return redisOperations.opsForValue().get("userId:"+userId).defaultIfEmpty(defaultCart).onErrorReturn(defaultCart).block();
     }
 
-    protected Mono<Boolean> writeCart(Cart cart) {
-        return redisOperations.opsForValue().set("userId:"+cart.getUserId(), cart);
+    protected void writeCart(Cart cart) {
+        redisOperations.opsForValue().set("userId:"+cart.getUserId(), cart).subscribe();
     }
 }
