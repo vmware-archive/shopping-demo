@@ -32,12 +32,18 @@ public class ShoppingApplication {
                     return stringCartEventGroupedFlux.reduce(getCart(stringCartEventGroupedFlux.key()), (cart, cartEvent) -> {
                         cart.applyEvent(cartEvent);
                         return cart;
-                    });
+                    })
+                .doOnNext(this::writeCart);
                 });
+
     }
 
     protected Cart getCart(String userId) {
         Cart defaultCart = new Cart(userId);
         return redisOperations.opsForValue().get("userId:"+userId).defaultIfEmpty(defaultCart).onErrorReturn(defaultCart).block();
+    }
+
+    protected Mono<Boolean> writeCart(Cart cart) {
+        return redisOperations.opsForValue().set("userId:"+cart.getUserId(), cart);
     }
 }
