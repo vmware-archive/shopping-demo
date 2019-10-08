@@ -31,9 +31,6 @@ public class AdRecommenderFunction implements Function<Tuple2<Flux<CartEvent>, F
         if (showMainItemMatchingAd(cartEvent, adEvent)) {
             maybeAd = mainItemAd(adEvent);
         }
-        if (showRelatedItemMatchingAd(cartEvent, adEvent)) {
-            maybeAd = relatedItemAd(adEvent);
-        }
         return maybeAd.map(ad -> new UserAd(cartEvent.getUserId(), ad));
     }
 
@@ -42,21 +39,6 @@ public class AdRecommenderFunction implements Function<Tuple2<Flux<CartEvent>, F
         String cartItemId = userCartEvent.getItemId();
         return action.equals("add") && adEvent.getRelatedTo().equals(cartItemId) ||
                 action.equals("remove") && adEvent.getItemId().equals(cartItemId);
-    }
-
-    private boolean showRelatedItemMatchingAd(CartEvent userCartEvent, AdEvent adEvent) {
-        String action = userCartEvent.getAction();
-        String cartItemId = userCartEvent.getItemId();
-        return action.equals("add") && adEvent.getItemId().equals(cartItemId) ||
-                action.equals("remove") && adEvent.getRelatedTo().equals(cartItemId);
-    }
-
-    private Optional<Ad> relatedItemAd(AdEvent adEvent) {
-        String relatedItem = adEvent.getRelatedTo();
-        if (relatedItem.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(new Ad(relatedItem, true, adEvent.getMessage()));
     }
 
     private Optional<Ad> mainItemAd(AdEvent adEvent) {

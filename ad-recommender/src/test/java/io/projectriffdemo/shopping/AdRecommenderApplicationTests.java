@@ -45,4 +45,15 @@ public class AdRecommenderApplicationTests {
                 .verifyComplete();
     }
 
+    @Test
+    public void doesNotShowAdsMatchingAddedItem() {
+        Flux<CartEvent> cartEvents = Flux.just(
+                new CartEvent("user1", "drums", "add")
+        );
+        Flux<AdEvent> adEvents = Flux.just(new AdEvent("drums", "add", "guitars", "drums are great!"));
+
+        StepVerifier.create(function.apply(Tuples.of(cartEvents, adEvents)))
+                .verifyComplete();
+    }
+
 }
