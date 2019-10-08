@@ -1,8 +1,24 @@
 # shopping-demo
 
+## Summary
+
 This is a sample demonstration of projectriff, in which we create a simple shopping cart.
 User actions such as adding and removing items arrive as input. These events are then used
 to compute the final state of the cart and display targeted advertisements.
+
+## Architecture
+
+![architecture](docs/imgs/riff-shopping-cart.png)
+
+1. cart-ingest: An application that accepts CartEvents (items added/removed from cart) enriches and publishes them to the cart-events stream
+1. cart: A function that processes the cart-events stream to compute a materialised view of the cart for each user and stores this cart in Redis.
+1. ads-ingest: An application that accepts AdEvents (new listings of ads, updating existing ads with related items) enriches and publishes them to
+the ads-events stream.
+1. ads: A function that processes the ad-events stream to compute a materialised view of the ads for each item and stores it in Redis.
+1. ad-recommender: A function that processes cart-events and ad-events to generate the personalised ads to be displayed for each customer and stores it in Redis. Only implements two rules currently:
+    * If an item is removed, display an ad for it.
+    * If an item is added display ad for related item.
+1. Homepage: An application that serves the cart and ads to the user.
 
 ## Prerequisites
 
