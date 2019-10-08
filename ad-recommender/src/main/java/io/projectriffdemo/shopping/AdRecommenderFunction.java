@@ -10,8 +10,8 @@ public class AdRecommenderFunction implements Function<Tuple2<Flux<CartEvent>, F
 
     @Override
     public Flux<UserAd> apply(Tuple2<Flux<CartEvent>, Flux<AdEvent>> events) {
-        Flux<CartEvent> cartFlux = events.getT1();
-        Flux<AdEvent> adFlux = events.getT2();
+        Flux<CartEvent> cartFlux = events.getT1().log("cart events");
+        Flux<AdEvent> adFlux = events.getT2().log("cart events");
 
         return cartFlux
                 .join(
@@ -20,8 +20,11 @@ public class AdRecommenderFunction implements Function<Tuple2<Flux<CartEvent>, F
                         just2(Flux.never()),
                         this::computeRelevantAd
                 )
+                .log("maybe relevant ads")
                 .filter(Optional::isPresent)
-                .map(Optional::get);
+                .log("relevant ads")
+                .map(Optional::get)
+                .log("definitely relevant ads");
     }
 
     private Optional<UserAd> computeRelevantAd(CartEvent cartEvent, AdEvent adEvent) {
