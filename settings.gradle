@@ -10,8 +10,6 @@
 rootProject.name = 'shopping-demo'
 
 
-include 'ad-ingest'
 include 'ad-recommender'
-include 'cart-ingest'
 include 'cart'
 include 'homepage'
