@@ -1,30 +1,21 @@
 package io.projectriffdemo.homepage;
 
-public class Home {
+public class HomePage {
     private String userId;
     private Cart cart;
-    private AdCampaign ads;
+    private Ads ads;
 
-    public Home(String userId, Cart cart, AdCampaign ads) {
+    public HomePage() {
+    }
+
+    public HomePage(String userId) {
+        this.userId = userId;
+    }
+
+    public HomePage(String userId, Cart cart, Ads ads) {
         this.userId = userId;
         this.cart = cart;
         this.ads = ads;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Home home = (Home) o;
-
-        return userId.equals(home.userId);
-
-    }
-
-    @Override
-    public int hashCode() {
-        return userId.hashCode();
     }
 
     public String getUserId() {
@@ -43,11 +34,11 @@ public class Home {
         this.cart = cart;
     }
 
-    public AdCampaign getAds() {
+    public Ads getAds() {
         return ads;
     }
 
-    public void setAds(AdCampaign ads) {
+    public void setAds(Ads ads) {
         this.ads = ads;
     }
 }

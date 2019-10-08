@@ -14,6 +14,7 @@ public class AdRecommenderApplication {
         SpringApplication.run(AdRecommenderApplication.class, args);
     }
 
+    // should really be a consumer
     public Function<Tuple2<Flux<CartEvent>, Flux<Ad>>, Flux<Ads>> adRecommender() {
         return objects -> {
             Flux<CartEvent> cartFlux = objects.getT1();
