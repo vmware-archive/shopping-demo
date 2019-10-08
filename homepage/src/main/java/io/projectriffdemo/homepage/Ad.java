@@ -1,26 +1,17 @@
 package io.projectriffdemo.homepage;
 
-public class Advertisement {
+public class Ad {
     private String itemId;
     private String message;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Advertisement that = (Advertisement) o;
-
-        return itemId.equals(that.itemId);
-
+    public Ad() {
     }
 
-    @Override
-    public int hashCode() {
-        return itemId.hashCode();
+    public Ad(String itemId) {
+        this.itemId = itemId;
     }
 
-    public Advertisement(String itemId, String message) {
+    public Ad(String itemId, boolean active, String message) {
         this.itemId = itemId;
         this.message = message;
     }
@@ -39,5 +30,13 @@ public class Advertisement {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "Ad{" +
+                "itemId='" + itemId + '\'' +
+                ", message='" + message + '\'' +
+                '}';
     }
 }
