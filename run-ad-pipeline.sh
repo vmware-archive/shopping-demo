@@ -32,13 +32,14 @@ function set_up() {
     --function-ref ad-recommender \
     --input "cart-events" \
     --input "ad-events" \
-    --output "user-ads" \
-    --tail
+    --output "user-ads"
+
+  sleep 10
 
   echo "💡 about to expose the gateway to local port 8080"
   echo "🚀️ open another terminal and start ingesting events️"
-  echo
-  kubectl -n riff-system port-forward "svc/riff-streaming-http-gateway" "8080:80"
+  kubectl -n "riff-system" port-forward "svc/riff-streaming-http-gateway" "8080:80" &
+  kubectl port-forward "svc/franz-kafka-liiklus" "6565:6565"
 }
 
 function main() {
