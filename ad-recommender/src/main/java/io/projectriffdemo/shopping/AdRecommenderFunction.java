@@ -1,13 +1,11 @@
 package io.projectriffdemo.shopping;
 
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.util.function.Tuple2;
 
 import java.util.Optional;
 import java.util.function.Function;
 
-@Component
 public class AdRecommenderFunction implements Function<Tuple2<Flux<CartEvent>, Flux<AdEvent>>, Flux<UserAd>> {
 
     @Override
