@@ -63,3 +63,12 @@ the ads-events stream.
     ```sh
     riff credentials apply my-gcr --gcr <path to service account token file> --set-default-image-prefix
     ```
+1. post some events:
+```bash
+curl http://localhost:8080/default/cart-events -H "Content-Type: application/json" -d '{ "userId": "u1", "itemId": "drums", "action":"add"}'
+curl http://localhost:8080/default/cart-events -H "Content-Type: application/json" -d '{ "userId": "u1", "itemId": "shoes", "action":"add"}'
+curl http://localhost:8080/default/cart-events -H "Content-Type: application/json" -d '{ "userId": "u1", "itemId": "drums", "action":"remove"}'
+
+curl http://localhost:8080/default/ad-events -H "Content-Type: application/json" -d '{"itemId": "drums", "relatedTo": "guitar", "message": "drums are great!"}'
+
+```
